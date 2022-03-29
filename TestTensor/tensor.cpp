@@ -57,13 +57,32 @@ void cc_send_uint32(uint16_t address, uint32_t data) //no pointer here
   return;
 }
 
+void cc_send_float(uint16_t address,float data){
+  union Data {
+    uint32_t uintData;
+    float floatData;
+  } unionData;
+  unionData.floatData = data;
+  
+  unsigned char txdata[8];
+  txdata[0] = 0x00;
+  txdata[1] = 0x00;
+  txdata[2] = 0x00;
+  txdata[3] = 0x00;
+  txdata[4] = (unsigned char)(unionData.uintData >> 24);
+  txdata[5] = (unsigned char)(unionData.uintData >> 16);
+  txdata[6] = (unsigned char)(unionData.uintData >> 8);
+  txdata[7] = (unsigned char)(unionData.uintData);
+  cc_send_to_pc(address, txdata);
+  return;
+}
 void action()                                       
    {                            
     long reading = scale.read_average(10);
     //Serial.println(reading);
    cc_send_uint32(0x0001, reading);
  
-    //cc_send_uint32(0x0003, 3.14);
+    cc_send_float(0x0003, 3.14);
     
   }
  
