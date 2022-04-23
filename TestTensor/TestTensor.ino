@@ -1,14 +1,16 @@
-#include "HX711.h"
+#include <HX711.h>
 #include "tensor.h"
 
-
+HX711 scale;
    
 void setup() {
- cc_one();
+ cc_init();
 }
 
-void loop() {
+void loop(){
   action();
+
+    
   delay(100);
   
 }
