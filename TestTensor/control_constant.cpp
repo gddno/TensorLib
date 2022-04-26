@@ -1,4 +1,14 @@
-#include "tensor.h" 
+#include "control_constant.h"
+
+
+/**
+ * init function 
+ */
+
+void cc_init(int speed)
+{
+ Serial.begin(speed);
+}
 
 /**
  * Sends array data with address to UART 
